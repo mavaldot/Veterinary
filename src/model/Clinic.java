@@ -2,17 +2,25 @@ package model;
 
 public class Clinic {
 
+	//Attributes
 	private String name;
 	private Owner p;
 	
-	public Clinic() {
+	//Constructor
+	public Clinic(String n) {
 		
-		p = new Owner();
+		name = n;
 		
 	}
 	
+	public void setUp() {
+		
+	}
+	
+	//Getters
 	public String getName() { return name; }
 	
+	//Setters
 	public void setName(String nam) { name = nam; }
 	
 }
