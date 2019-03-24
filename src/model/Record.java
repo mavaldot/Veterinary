@@ -73,6 +73,281 @@ public class Record {
 	public void setSymptoms(String symp) { symptoms = symp; }
 	public void setDiagnosis(String diag) { diagnosis = diag; }
 	public void setMedications(ArrayList<Medication> md) { medications = md; }
+
+	//Calculates the cost of the hospitalization
+	public double calculateCost(int day, int month, int year) {
+		double cost = 0;
+
+		int days = 0;
+		int entryDay = dateOfEntry.getDay();
+		int entryMonth = dateOfEntry.getMonth();
+		int entryYear = dateOfEntry.getYear();
+		
+		while(entryYear < year) {
+			if(entryMonth == 1) {
+				while(entryDay <= 31) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 2) {
+				while(entryDay <= 28) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 3) {
+				while(entryDay <= 31) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 4) {
+				while(entryDay <= 30) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 5) {
+				while(entryDay <= 31) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 6) {
+				while(entryDay <= 30) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 7) {
+				while(entryDay <= 31) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 8) {
+				while(entryDay <= 31) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 9) {
+				while(entryDay <= 30) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 10) {
+				while(entryDay <= 31) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 11) {
+				while(entryDay <= 30) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth++;
+			}
+			else if(entryMonth == 12) {
+				while(entryDay <= 31) {
+					entryDay++;
+					days++;
+				}
+				entryDay = 1;
+				entryMonth = 1;
+				entryYear++;
+			}
+		}
+		
+		if(year == entryYear) {
+			while(entryMonth < month) {
+				if(entryMonth == 1) {
+					while(entryDay <= 31) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 2) {
+					while(entryDay <= 28) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 3) {
+					while(entryDay <= 31) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 4) {
+					while(entryDay <= 30) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 5) {
+					while(entryDay <= 31) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 6) {
+					while(entryDay <= 30) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 7) {
+					while(entryDay <= 31) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 8) {
+					while(entryDay <= 31) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 9) {
+					while(entryDay <= 30) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 10) {
+					while(entryDay <= 31) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				else if(entryMonth == 11) {
+					while(entryDay <= 30) {
+						entryDay++;
+						days++;
+					}
+					entryDay = 1;
+					entryMonth++;
+				}
+				
+			}
+			if(entryMonth == month) {
+				while(entryDay < day) {
+					entryDay++;
+					days++;
+				}
+			}
+		}
+		
+		double weight = pet.getWeight();
+		
+		if(pet.getType().equals(Pet.CAT)) {
+			
+			if(weight >= 1 && weight <= 3) {
+				cost = 10000 * days;
+			} else if(weight > 3 && weight <= 10) {
+				cost = 12000 * days;
+			} else if(weight > 10 && weight <= 20) {
+				cost = 15000 *  days;
+			} else if(weight > 20) {
+				cost = 20000 * days;
+			} else {
+				cost = 0;
+			}
+			
+		} else if(pet.getType().equals(Pet.DOG)) {
+			
+			if(weight >= 1 && weight <= 3) {
+				cost = 15000 * days;
+			} else if(weight > 3 && weight <= 10) {
+				cost = 17000 * days;
+			} else if(weight > 10 && weight <= 20) {
+				cost = 20000 *  days;
+			} else if(weight > 20) {
+				cost = 25000 * days;
+			} else {
+				cost = 0;
+			}
+			
+		} else if(pet.getType().equals(Pet.BIRD)) {
+			
+			if(weight >= 1 && weight <= 3) {
+				cost = 10000 * days;
+			} else if(weight > 3 && weight <= 10) {
+				cost = 12000 * days;
+			} else if(weight > 10 && weight <= 20) {
+				cost = 20000 *  days;
+			} else if(weight > 20) {
+				cost = 25000 * days;
+			} else {
+				cost = 0;
+			}
+			
+		} else if(pet.getType().equals(Pet.OTHER)) {
+		
+			if(weight >= 1 && weight <= 3) {
+				cost = 10000 * days;
+			} else if(weight > 3 && weight <= 10) {
+				cost = 17000 * days;
+			} else if(weight > 10 && weight <= 20) {
+				cost = 30000 *  days;
+			} else if(weight > 20) {
+				cost = 30000 * days;
+			} else {
+				cost = 0;
+			}
+		}
+		
+		for(Medication m : medications) {
+			cost += days * m.getDose() * m.getCostPerDose() * m.getFrequency();
+		}
+		
+		return cost;
+	}
 	
 }
 	

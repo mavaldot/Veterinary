@@ -7,11 +7,11 @@ import model.Pet;
 
 public class Main {
 
-	private Clinic johannios;
+	private Clinic clinic;
 
 	//Main constructor 
 	public Main() {
-		johannios = new Clinic("Johannio's Veterinary Clinic");
+		clinic = new Clinic("My Little Pet Veterinary Clinic");
 	}
 	
 	public static void main(String args[]) {
@@ -22,13 +22,13 @@ public class Main {
 	}
 	
 	public void setUp() {
-		johannios.setUp();
+		clinic.setUp();
 	}
 	
 	//handles input and output. quits when running = false
 	public void run() {
 		
-		System.out.println("Welcome to " + johannios.getName() + "!");
+		System.out.println("Welcome to " + clinic.getName() + "!");
 		
 		boolean running = true;
 		boolean asking = false;
@@ -40,6 +40,13 @@ public class Main {
 			System.out.println("2. Hospitalize a pet");
 			System.out.println("3. Display the records of all the currently hospitalized animals");
 			System.out.println("4. Obtain the phone number of a pet's owner");
+			System.out.println("5. Calculate the cost of a hospitalization");
+			System.out.println("6. Release a pet from hospitalization");
+			System.out.println("7. Check the clinic's total revenue");
+			System.out.println("8. Check how many rooms a pet occupies");
+			System.out.println("9. Display the record history of a pet");
+			System.out.println("10. Quit");
+			
 			
 			String choice = s.nextLine();
 			int choiceNum = 0;
@@ -79,7 +86,7 @@ public class Main {
 					
 				}
 				
-				johannios.addOwner(name, id, address, phoneNumber);
+				clinic.addOwner(name, id, address, phoneNumber);
 				
 				boolean addingPets = true;
 				
@@ -161,7 +168,7 @@ public class Main {
 						}
 					}
 					
-					johannios.addPet(petName, petType, petAgeNum, petWeightDouble);
+					clinic.addPet(petName, petType, petAgeNum, petWeightDouble);
 					
 					asking = true;
 					while(asking) {
@@ -260,7 +267,7 @@ public class Main {
 				String diagnosis = s.nextLine();
 				
 				//IT IS AN INT BECAUSE THE MESSAGE I WILL SHOW DEPENDS ON THE INT THE FUNCTION RETURNS
-				int hospitalizeStatus = johannios.hospitalizePet(ownerName, petName, day, month, year, symptoms, diagnosis);
+				int hospitalizeStatus = clinic.hospitalizePet(ownerName, petName, day, month, year, symptoms, diagnosis);
 				
 				switch(hospitalizeStatus) {
 				
@@ -329,7 +336,7 @@ public class Main {
 									}
 								}
 								
-								if(johannios.addMedication(petName, medName, doseDouble, costPerDoseDouble, frequencyDouble))
+								if(clinic.addMedication(petName, medName, doseDouble, costPerDoseDouble, frequencyDouble))
 									System.out.println("The medication was added successfully");
 								else
 									System.out.println("ERROR. Could not add the medication");
@@ -363,7 +370,7 @@ public class Main {
 				
 			case 3:
 				
-				String msg = johannios.showHospitalizedAnimalRecords();
+				String msg = clinic.showHospitalizedAnimalRecords();
 				
 				System.out.println(msg);
 				break;
@@ -384,13 +391,15 @@ public class Main {
 						case 1:
 							System.out.println("Please enter the name of the owner");
 							String findOwnerName = s.nextLine();
-							
+							int phoneNumberO = clinic.findPhoneNumberWithOwnerName(findOwnerName);
+							System.out.println(phoneNumberO);
 							asking = false;
 							break;
 						case 2:
 							System.out.println("Please enter the name of the pet");
 							String findPetName = s.nextLine();
-							
+							int phoneNumberP = clinic.findPhoneNumberWithPetName(findPetName);
+							System.out.println(phoneNumberP);
 							asking = false;
 							break;
 						default:
@@ -403,6 +412,139 @@ public class Main {
 
 				}
 				
+				break;
+				
+			case 5:
+				
+				System.out.println("Please enter the name of the hospitalized pet");
+				String hPetName = s.nextLine();
+				
+				int cday = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current day of the month");
+					String cdayStr = s.nextLine();
+					try {
+						cday = Integer.parseInt(cdayStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				int cmonth = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current month");
+					String cmonthStr = s.nextLine();
+					try {
+						cmonth = Integer.parseInt(cmonthStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				int cyear = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current year");
+					String cyearStr = s.nextLine();
+					try {
+						cyear = Integer.parseInt(cyearStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				if(clinic.isHospitalized(hPetName)) {
+					double cost = clinic.calculateHospitalizationCost(hPetName, cday, cmonth, cyear);
+					System.out.printf("The cost of this pet's hospitalization is %.2f COP\n", cost);
+				} else {
+					System.out.println("ERROR. There is no hospitalized pet named " + hPetName);
+				}
+				
+				
+				break;
+				
+			case 6:
+				
+				System.out.println("Please enter the name of the pet you want to release");
+				String releasedPet = s.nextLine();
+				
+				int rday = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current day of the month");
+					String rdayStr = s.nextLine();
+					try {
+						rday = Integer.parseInt(rdayStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				int rmonth = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current month");
+					String rmonthStr = s.nextLine();
+					try {
+						rmonth = Integer.parseInt(rmonthStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				int ryear = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current year");
+					String ryearStr = s.nextLine();
+					try {
+						ryear = Integer.parseInt(ryearStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				if(clinic.releasePet(releasedPet, rday, rmonth, ryear)) {
+					System.out.println("The pet was released successfully.");
+				} else {
+					System.out.println("ERROR. Could not find a pet with that name.");
+				}
+				
+				break;
+				
+			case 7:
+				System.out.printf("The total revenue is: %.2f COP\n", clinic.getRevenue());
+				break;
+				
+			case 8:
+				System.out.println("Please enter the name of the pet");
+				String roomsPetName = s.nextLine();
+				
+				int rooms = clinic.howManyRooms(roomsPetName);
+				
+				System.out.println(roomsPetName + " occupies " + rooms + " rooms.");
+				
+				break;
+				
+			case 9:
+				System.out.println("Please enter the name of the pet");
+				String rPetName = s.nextLine();
+				String history = clinic.displayHistory(rPetName);
+				System.out.println(history);
 				break;
 				
 			case 10:

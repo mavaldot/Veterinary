@@ -16,13 +16,26 @@ public class Room {
 		available = a;
 	}
 	
+	//Fill the room with a pet given the attributes
 	public void fillRoom(Pet cpt, Owner own, int day, int month, int year, String symptoms, String diagnosis) {
 		currentPet = cpt;
 		record = new Record(Record.OPEN, cpt, own, new Date(day, month, year), symptoms, diagnosis);
 		available = false;
 	}
 	
+	//Calculates the cost of the pet's hospitalization
+	public double calculateCost(int day, int month, int year) {
+		double cost = record.calculateCost(day, month, year);
+		
+		return cost;
+	}
 	
+	//Releases the current pet
+	public void releasePet() {
+		currentPet = null;
+		record = null;
+		available = true;
+	}
 	
 	//Getters
 	public String getName() { return name; }

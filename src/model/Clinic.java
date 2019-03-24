@@ -12,6 +12,7 @@ public class Clinic {
 	private ArrayList<Owner> owners;
 	private Room[] rooms;
 	private double revenue;
+	private ArrayList<History> histories;
 	
 	//Constructor
 	public Clinic(String n) {
@@ -20,6 +21,7 @@ public class Clinic {
 		owners = new ArrayList<Owner>();
 		rooms = new Room[MAX_ROOMS];
 		revenue = 0;
+		histories = new ArrayList<History>();
 		
 	}
 	
@@ -28,12 +30,9 @@ public class Clinic {
 		for(int i = 0; i < MAX_ROOMS; i++) {
 			rooms[i] = new Room("Room " + (i+1), null, null, true);
 		}
-		
-		for(int i = 0; i < MAX_ROOMS; i++) {
-			System.out.println(rooms[i].getName());
-		}
 	}
 	
+	//Adds the medication to the record
 	public boolean addMedication(String petName, String medName, double dose, double costPerDose, double frequency) {
 		boolean success = false;
 		for(int i = 0; i < MAX_ROOMS; i++) {
@@ -93,6 +92,7 @@ public class Clinic {
 		return status;
 	}
 	
+	//Shows the records of all hospitalized animals
 	public String showHospitalizedAnimalRecords() {
 		String msg = "";
 		for(int i = 0; i < MAX_ROOMS; i++) {
@@ -108,14 +108,136 @@ public class Clinic {
 		return msg;
 	}
 	
+	//Finds the phone number given the owner's name
+	public int findPhoneNumberWithOwnerName(String ownerName) {
+		int phoneNumber = 0;
+		for (Owner o : owners) {
+			if(o.getName().equals(ownerName)) {
+				phoneNumber = o.getPhoneNumber();
+				break;
+			}
+		}
+		
+		return phoneNumber;
+	}
+	
+	//Find the phone number given the pet's name
+	public int findPhoneNumberWithPetName(String petName) {
+		int phoneNumber = 0;
+		for(Owner o : owners) {
+			
+			for(Pet p : o.getPets()) {
+				if(p.getName().equals(petName)) {
+					phoneNumber = o.getPhoneNumber();
+					break;
+				}
+			}
+		}
+		
+		return phoneNumber;
+	}
+	
+	//Checks to see if the pet is currently hospitalized
+	public boolean isHospitalized(String petName) {
+		boolean hospitalized = false;
+		for(int i = 0; i < MAX_ROOMS; i++) {
+			if(rooms[i].getCurrentPet().getName().equals(petName)) {
+				hospitalized = true;
+				break;
+			}
+		}
+		
+		return hospitalized;
+	}
+	
+	//Calculates the cost of hospitalization of a particular pet
+	public double calculateHospitalizationCost(String petName, int day, int month, int year) {
+		double cost = 0;
+		for(int i = 0; i < MAX_ROOMS; i++) {
+			if(rooms[i].getCurrentPet() != null) {
+				if(rooms[i].getCurrentPet().getName().equals(petName)) {
+					cost += rooms[i].calculateCost(day, month, year);
+				}
+			}
+		}
+		
+		return cost;
+		
+	}
+	
+	//Release a pet. Returns true if a pet is released successfully
+	public boolean releasePet(String petName, int day, int month, int year) {
+		boolean success = false;
+		for(int i = 0; i < MAX_ROOMS; i++) {
+			if(rooms[i].getCurrentPet() != null) {
+				if(rooms[i].getCurrentPet().getName().equals(petName)) {
+					rooms[i].getRecord().setState(Record.CLOSED);
+					boolean foundPet = false;
+					for(History h : histories) {
+						if(h.getPetName().equals(petName)) {
+							
+							h.getRecords().add(rooms[i].getRecord());
+							foundPet = true;
+						}
+					} if (!foundPet) {
+						histories.add(new History(petName));
+						histories.get(histories.size()-1).addRecord(rooms[i].getRecord());
+					}
+					
+					revenue += calculateHospitalizationCost(petName, day, month, year);
+					rooms[i].releasePet();
+					
+					success = true;
+				}
+			}
+		}
+		
+		return success;
+	}
+	
+	//Checks how many rooms a pet occupies
+	public int howManyRooms(String petName) {
+		int roomsNum = 0;
+		for(int i = 0; i < MAX_ROOMS; i++) {
+			if(rooms[i].getCurrentPet() != null) {
+				if(rooms[i].getCurrentPet().getName().equals(petName)) 
+					roomsNum++;
+			}
+		}
+		return roomsNum;
+	}
+	
+	//Checks the record history of a pet
+	public String displayHistory(String petName) {
+		
+		String msg = "";
+		boolean found = false;
+		
+		for(History h : histories) {
+			if(h.getPetName().equals(petName)) {
+				found = true;
+				for(Record r : h.getRecords()) {
+					msg += r.fullReport();
+				}
+			}
+		}
+		if(!found) {
+			msg = petName + " does not have a record history in this clinic.";
+		}
+		
+		return msg;
+		
+	}
+	
 	//Getters
 	public String getName() { return name; }
 	public double getRevenue() { return revenue; }
 	public ArrayList<Owner> getOwners() { return owners; }
+	public ArrayList<History> getHistories() { return histories; }
 	
 	//Setters
 	public void setName(String n) { name = n; }
 	public void setRevenue(double rev) { revenue = rev; }
 	public void setOwner(ArrayList<Owner> owns) { owners = owns; }
-	
+	public void setHistories(ArrayList<History> hs) { histories = hs; }	
 }

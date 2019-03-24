@@ -40,7 +40,7 @@ public class Owner {
 	public String getName() { return name; }
 	public String getId() { return id; }
 	public String getAddress() { return address; }
-	public int phoneNumber() { return phoneNumber; }
+	public int getPhoneNumber() { return phoneNumber; }
 	public ArrayList<Pet> getPets() { return pets; }
 	
 	//Setters
