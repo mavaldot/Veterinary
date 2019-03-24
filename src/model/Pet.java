@@ -3,10 +3,10 @@ package model;
 public class Pet {
 	
 	//Static attributes
-	public static final String GATO = "gato";
-	public static final String PERRO = "perro";
-	public static final String AVE = "ave";
-	public static final String OTRO = "otro";
+	public static final String CAT = "cat";
+	public static final String DOG = "dog";
+	public static final String BIRD = "bird";
+	public static final String OTHER = "other";
 	
 	//Non-static attributes
 	private String name;
@@ -14,6 +14,7 @@ public class Pet {
 	private int age;
 	private double weight;
 	
+	//Constructor
 	public Pet(String n, String t, int a, double w) {
 		name = n;
 		type = t;
@@ -29,7 +30,7 @@ public class Pet {
 	
 	//Setters
 	public void setName(String name) { this.name = name; }
-	public void setType(String type) { this.type = OTRO; }
+	public void setType(String type) { this.type = type; }
 	public void setAge(int age) { this.age = age; }
 	public void setWeight(double weight) { this.weight = weight; }
 	

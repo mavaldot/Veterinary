@@ -21,7 +21,7 @@ public class Owner {
 		pets = new ArrayList<Pet>();
 	}
 	
-	//
+	//Add a pet to the pets arraylist
 	public void addPet(String name, String type, int age, double weight) {
 		pets.add(new Pet(name, type, age, weight));
 	}

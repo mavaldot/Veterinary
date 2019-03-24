@@ -1,9 +1,9 @@
 package ui;
 
-import java.text.ParseException;
 import java.util.Scanner;
 
 import model.Clinic;
+import model.Pet;
 
 public class Main {
 
@@ -31,11 +31,14 @@ public class Main {
 		System.out.println("Welcome to " + johannios.getName() + "!");
 		
 		boolean running = true;
+		boolean asking = false;
 		Scanner s = new Scanner(System.in);
 		
 		while(running) {
 			System.out.println("\nPlease pick an option:");
 			System.out.println("1. Register a new human client and his/her pets");
+			System.out.println("2. Hospitalize a pet");
+			System.out.println("3. ");
 			
 			String choice = s.nextLine();
 			int choiceNum = 0;
@@ -59,7 +62,7 @@ public class Main {
 				System.out.println("Please enter the address of the client");
 				String address = s.nextLine();
 				
-				boolean asking = true;
+				asking = true;
 				int phoneNumber = 0;
 				while(asking) {
 					
@@ -77,25 +80,131 @@ public class Main {
 				
 				johannios.addOwner(name, id, address, phoneNumber);
 				
-				System.out.println("Please enter the name of the pet");
-				String petName = s.nextLine();
-				System.out.println("Please enter the type of the pet");
-				String petType = s.nextLine();
-				System.out.println("Please enter the age of the pet");
-				String petAge = s.nextLine();
-				int petAgeNum = Integer.parseInt(petAge);
+				boolean addingPets = true;
 				
-				System.out.println("Please enter the weight of the pet");
-				String petWeight = s.nextLine();
-				double petWeightDouble = Double.parseDouble(petWeight);
-				
-				johannios.addPet(petName, petType, petAgeNum, petWeightDouble);
+				while(addingPets) {
+					
+					System.out.println("Please enter the name of the pet");
+					String petName = s.nextLine();
+					
+					int petTypeInt = 0;
+					String petType = "";
+					asking = true;
+					while(asking) {
+						System.out.println("Please choose the type of the pet");
+						System.out.println("1. Cat");
+						System.out.println("2. Dog");
+						System.out.println("3. Bird");
+						System.out.println("4. Other");
+						String type = s.nextLine();
+						try {
+							petTypeInt = Integer.parseInt(type);
+							switch(petTypeInt) {
+							
+							case 1:
+								petType = Pet.CAT;
+								asking = false;
+								break;
+								
+							case 2:
+								petType = Pet.DOG;
+								asking = false;
+								break;
+								
+							case 3:
+								petType = Pet.BIRD;
+								asking = false;
+								break;
+								
+							case 4:
+								petType = Pet.OTHER;
+								asking = false;
+								break;
+								
+							default:
+								System.out.println("ERROR. Please enter a valid number");
+								break;
+							}
+						} catch (NumberFormatException e) {
+							System.out.println("ERROR. Please enter a valid number");
+						}
+
+					}
+					
+			
+					
+					int petAgeNum = 0;
+					asking = true;
+					while(asking) {
+						System.out.println("Please enter the age of the pet");
+						String petAge = s.nextLine();
+						try {
+							petAgeNum = Integer.parseInt(petAge);
+							asking = false;
+						} catch (NumberFormatException e) {
+							System.out.println("ERROR. Please enter a valid age");
+						}
+
+					}
+
+					double petWeightDouble = 0;
+					asking = true;
+					while(asking) {
+						System.out.println("Please enter the weight of the pet");
+						String petWeight = s.nextLine();
+						try {
+							petWeightDouble = Double.parseDouble(petWeight);
+							asking = false;
+						} catch (NumberFormatException e) {
+							System.out.println("ERROR. Please enter a valid weight.");
+						}
+					}
+					
+					johannios.addPet(petName, petType, petAgeNum, petWeightDouble);
+					
+					asking = true;
+					while(asking) {
+						System.out.println("Does this client have another pet?");
+						System.out.println("1. Yes");
+						System.out.println("2. No");
+						String ans = s.nextLine();
+						int ansNum = 0;
+						try {
+							ansNum = Integer.parseInt(ans);
+							
+							switch(ansNum) {
+							
+							case 1:
+								asking = false;
+								System.out.println(" ");
+								break;
+								
+							case 2:
+								asking = false;
+								addingPets = false;
+								break;
+								
+							default:
+								System.out.println("ERROR. PLEASE ENTER A VALID CHOICE");
+								break;
+							
+							}
+						} catch (NumberFormatException e) {
+							System.out.println("ERROR. PLEASE ENTER A VALID CHOICE");
+						}
+						
+
+					}
+				}
+
+				System.out.println("The client and his/her pets were added successfully.");
 				
 				break;
 				
 			case 2:
 				
 				
+				break;
 				
 			case 10:
 				running = false;
