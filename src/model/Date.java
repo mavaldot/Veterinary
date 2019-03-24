@@ -14,6 +14,11 @@ public class Date {
 		year = y;
 	}
 	
+	public String reportDate() {
+		String report = day + "/" + month + "/" + year + "\n";
+		return report;
+	}
+	
 	//Getters
 	public int getDay() { return day; }
 	public int getMonth() { return month; }

@@ -38,7 +38,8 @@ public class Main {
 			System.out.println("\nPlease pick an option:");
 			System.out.println("1. Register a new human client and his/her pets");
 			System.out.println("2. Hospitalize a pet");
-			System.out.println("3. ");
+			System.out.println("3. Display the records of all the currently hospitalized animals");
+			System.out.println("4. Obtain the phone number of a pet's owner");
 			
 			String choice = s.nextLine();
 			int choiceNum = 0;
@@ -203,6 +204,204 @@ public class Main {
 				
 			case 2:
 				
+				System.out.println("Please enter the name of the pet you want to hospitalize");
+				String petName = s.nextLine();
+				
+				//I ASK FOR THE NAME OF THE OWNER BECAUSE TWO DIFFERENT PETS CAN HAVE THE SAME NAME
+				System.out.println("Please enter the name of the owner of this pet");
+				String ownerName = s.nextLine();
+				
+				int day = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current day of the month");
+					String dayStr = s.nextLine();
+					try {
+						day = Integer.parseInt(dayStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				int month = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current month");
+					String monthStr = s.nextLine();
+					try {
+						month = Integer.parseInt(monthStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				int year = 0;
+				asking = true;
+				while(asking) {
+					System.out.println("Please enter the current year");
+					String yearStr = s.nextLine();
+					try {
+						year = Integer.parseInt(yearStr);
+						asking = false;
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
+				
+				System.out.println("Please enter the symptoms");
+				String symptoms = s.nextLine();
+				
+				System.out.println("Please enter the possible diagnosis");
+				String diagnosis = s.nextLine();
+				
+				//IT IS AN INT BECAUSE THE MESSAGE I WILL SHOW DEPENDS ON THE INT THE FUNCTION RETURNS
+				int hospitalizeStatus = johannios.hospitalizePet(ownerName, petName, day, month, year, symptoms, diagnosis);
+				
+				switch(hospitalizeStatus) {
+				
+				case 0:
+					System.out.println("ERROR. There is no room available");
+					break;
+				case 1:
+					System.out.println("ERROR. Could not find the pet.");
+					break;
+				case 2:
+
+					System.out.println("The pet was hospitalized successfully");
+					System.out.println("Was this pet prescribed any medication?");
+					int medChoiceNum = 0;
+					boolean askingMedication = true;
+					while(askingMedication) {
+						
+						System.out.println("1. Yes");
+						System.out.println("2. No");
+						
+						String medChoice = s.nextLine();
+						try {
+							medChoiceNum = Integer.parseInt(medChoice);
+							switch(medChoiceNum) {
+							
+							case 1:
+								System.out.println("Please enter the name of the medication");
+								String medName = s.nextLine();
+								
+								double doseDouble = 0;
+								asking = true;
+								while(asking) {
+									System.out.println("Please enter the dose of the medication");
+									String dose = s.nextLine();
+									try {
+										doseDouble = Double.parseDouble(dose);
+										asking = false;
+									} catch (NumberFormatException e) {
+										System.out.println("ERROR. Please enter a valid dose.");
+									}
+								}
+								
+								double costPerDoseDouble = 0;
+								asking = true;
+								while(asking) {
+									System.out.println("Please enter the cost per dose of the medication");
+									String costPerDose = s.nextLine();
+									try {
+										costPerDoseDouble = Double.parseDouble(costPerDose);
+										asking = false;
+									} catch (NumberFormatException e) {
+										System.out.println("ERROR. Please enter a valid cost per dose.");
+									}
+								}
+								
+								double frequencyDouble = 0;
+								asking = true;
+								while(asking) {
+									System.out.println("Please enter the frequency (per day) of the medication");
+									String frequency = s.nextLine();
+									try {
+										frequencyDouble = Double.parseDouble(frequency);
+										asking = false;
+									} catch (NumberFormatException e) {
+										System.out.println("ERROR. Please enter a valid frequency.");
+									}
+								}
+								
+								if(johannios.addMedication(petName, medName, doseDouble, costPerDoseDouble, frequencyDouble))
+									System.out.println("The medication was added successfully");
+								else
+									System.out.println("ERROR. Could not add the medication");
+								
+								
+								System.out.println("Was this pet prescribed any other medication?");
+								break;
+							case 2:
+								askingMedication = false;
+								break;
+							default:
+								System.out.println("ERROR. Please enter a valid number");
+								break;
+							}
+						} catch (NumberFormatException e) {
+							System.out.println("ERROR. Please enter a number.");
+						}
+
+					}
+					
+					
+					
+					break;
+				default:
+					System.out.println("ERROR");
+					break;
+				
+				}
+				
+				break;
+				
+			case 3:
+				
+				String msg = johannios.showHospitalizedAnimalRecords();
+				
+				System.out.println(msg);
+				break;
+				
+			case 4:
+				
+				int nameChoiceNum = 0;
+				asking = true;
+				while(asking) {
+					try {
+						
+						System.out.println("Do you know the owner's name or the pet's name?");
+						System.out.println("1. Owner's name");
+						System.out.println("2. Pet's name");
+						String nameChoice = s.nextLine();
+						nameChoiceNum = Integer.parseInt(nameChoice);
+						switch(nameChoiceNum) {
+						case 1:
+							System.out.println("Please enter the name of the owner");
+							String findOwnerName = s.nextLine();
+							
+							asking = false;
+							break;
+						case 2:
+							System.out.println("Please enter the name of the pet");
+							String findPetName = s.nextLine();
+							
+							asking = false;
+							break;
+						default:
+							System.out.println("ERROR. Please enter a valid number");
+							break;
+						}
+					} catch (NumberFormatException e) {
+						System.out.println("ERROR. Please enter a number.");
+					}
+
+				}
 				
 				break;
 				

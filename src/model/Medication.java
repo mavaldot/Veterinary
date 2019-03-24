@@ -16,6 +16,17 @@ public class Medication {
 		frequency = f;
 	}
 	
+	public String fullReport() {
+		String report = "";
+		report += "Name: " + name + "\n";
+		report += "Dose: " + dose + "\n";
+		report += "Cost per dose: " + costPerDose + "\n";
+		report += "Dose frequency (per day): " + frequency + "\n";
+		
+		return report;
+		
+	}
+	
 	//Getters
 	public String getName() { return name; } 
 	public double getDose() { return dose; }

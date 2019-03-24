@@ -18,14 +18,42 @@ public class Record {
 	private ArrayList<Medication> medications;
 	
 	//Constructor
-	public Record(int st, Pet pt, Owner own, Date doe, String symp, String d, ArrayList<Medication> md) {
+	public Record(int st, Pet pt, Owner own, Date doe, String symp, String d) {
 		state = st;
 		pet = pt;
 		owner = own;
 		dateOfEntry = doe;
 		symptoms = symp;
 		diagnosis = d;
-		medications = md;
+		medications = new ArrayList<Medication>();
+	}
+	
+	public String fullReport() {
+		String msg = "";
+		msg += "\nState: ";
+		if(state == CLOSED) {
+			msg += "CLOSED\n";
+		} else if(state == OPEN) {
+			msg += "OPEN\n";
+		}
+		msg += "\nPet info: \n";
+		msg += pet.fullReport();
+		msg += "Date of entry: " + dateOfEntry.reportDate();
+		msg += "\nOwner info: \n";
+		msg += owner.fullReport();
+		msg += "\nSymptoms: " + symptoms + "\n";
+		msg += "Diagnosis: " + diagnosis + "\n";
+		if(medications != null) {
+			msg += "\nMedications info: \n";
+			for(Medication m : medications) {
+				m.fullReport();
+			}
+		} else {
+			msg += "\nMedications: None\n";
+		}
+		
+		return msg;
+		
 	}
 	
 	//Getters

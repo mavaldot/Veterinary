@@ -22,6 +22,16 @@ public class Pet {
 		weight = w;
 	}
 	
+	public String fullReport() {
+		String report = "";
+		report += "Name: " + name + "\n";
+		report += "Type: " + type + "\n";
+		report += "Age: " + age + "\n";
+		report += "Weight: " + weight + "\n";
+		
+		return report;
+	}
+	
 	//Getters
 	public String getName() { return name; }
 	public String getType() { return type; }

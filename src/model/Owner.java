@@ -26,6 +26,16 @@ public class Owner {
 		pets.add(new Pet(name, type, age, weight));
 	}
 	
+	public String fullReport() {
+		String report = "";
+		report += "Name: " + name + "\n";
+		report += "ID: " + id + "\n";
+		report += "Address: " + address + "\n";
+		report += "Phone number: " + phoneNumber + "\n";
+		
+		return report;
+	}
+	
 	//Getters
 	public String getName() { return name; }
 	public String getId() { return id; }

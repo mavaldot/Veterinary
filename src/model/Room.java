@@ -16,6 +16,14 @@ public class Room {
 		available = a;
 	}
 	
+	public void fillRoom(Pet cpt, Owner own, int day, int month, int year, String symptoms, String diagnosis) {
+		currentPet = cpt;
+		record = new Record(Record.OPEN, cpt, own, new Date(day, month, year), symptoms, diagnosis);
+		available = false;
+	}
+	
+	
+	
 	//Getters
 	public String getName() { return name; }
 	public Pet getCurrentPet() { return currentPet; }
